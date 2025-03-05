@@ -1,0 +1,75 @@
+edu
+jieyaochen@login.khoury.northeastern.edu's password: 
+=================================================================
+You have logged into login-students.khoury.northeastern.edu
+=================================================================
+Linux at Khoury College
+You may SSH to alternative linux machines.
+Alternative linux machines are available if connected to NUwave, 
+or if connected to Northeastern VPN.
+The hostnames are linux-[071-085].khoury.northeastern.edu
+=================================================================
+Linux Beta
+The Beta server may contain newer software versions
+Available at login-beta.khoury.northeastern.edu
+=================================================================
+This server DOES NOT send emails.
+Please use the faculty login server to send emails.
+=================================================================
+If you encounter any issues, please contact us via email
+khoury-systems@northeastern.edu 
+=================================================================
+Last login: Sun Jan  7 00:08:22 2024 from 113.119.180.228
+[jieyaochen@login-students ~]$ clear
+
+[jieyaochen@login-students ~]$ ls
+[jieyaochen@login-students ~]$ cd CS5008/
+-bash: cd: CS5008/: No such file or directory
+[jieyaochen@login-students ~]$ mkdir CS5007
+[jieyaochen@login-students ~]$ ls
+CS5007
+[jieyaochen@login-students ~]$ cd CS5007/
+[jieyaochen@login-students CS5007]$ mkdir Examples
+[jieyaochen@login-students CS5007]$ ls
+Examples
+[jieyaochen@login-students CS5007]$ pwd
+/home/jieyaochen/CS5007
+[jieyaochen@login-students CS5007]$ mv ../CS5007 ../CS5008
+[jieyaochen@login-students CS5007]$ cd ..
+[jieyaochen@login-students ~]$ ls
+CS5008
+[jieyaochen@login-students ~]$ cd Examples
+-bash: cd: Examples: No such file or directory
+[jieyaochen@login-students ~]$ cd CS5008
+[jieyaochen@login-students CS5008]$ cd Examples
+[jieyaochen@login-students Examples]$ vim example.c
+[jieyaochen@login-students Examples]$ gcc example.c
+[jieyaochen@login-students Examples]$ ls
+a.out  example.c
+[jieyaochen@login-students Examples]$ clang example.c
+[jieyaochen@login-students Examples]$ vim example.c
+
+#include <studio.h>
+
+int main(){
+        printf("hello!")
+        return 0;
+}
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+-- INSERT --                                                  4,18-25       All
