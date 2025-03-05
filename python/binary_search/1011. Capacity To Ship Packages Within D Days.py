@@ -8,7 +8,7 @@ class Solution:
         所以总的时间复杂度是O(n * log(sum(weights)))
 
 
-        空间复杂度：O(1)，只使用了常数额外空间，不会随输入规模增长。'''
+        空间复杂度：O(1)，只使用了常数额外空间'''
 
     def shipWithinDays(self, weights: List[int], days: int) -> int:
         left = max(weights)
