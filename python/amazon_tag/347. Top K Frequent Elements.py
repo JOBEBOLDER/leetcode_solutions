@@ -13,7 +13,7 @@ class Solution:
         pq = []
 
         for num, freq in val_to_freq.items():
-            heappush(pq, (freq, num))
+            heappush(pq, (freq, num))#pq按照freq排序
             if len(pq) > k:
                 heappop(pq)
 
