@@ -9,7 +9,7 @@ class Solution:
         #medium
         #base case:
         if root is None:
-            return 
+            return 0
 
         x = x * 10 + root.val
 
