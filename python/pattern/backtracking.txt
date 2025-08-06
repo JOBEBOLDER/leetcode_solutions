@@ -1,0 +1,23 @@
+def backtrack(path, choices):
+    if 终止条件:
+        res.append(path)
+        return
+    for choice in choices:
+        if 剪枝条件:
+            continue
+        做选择
+        backtrack(path + [choice], 剩下的choices)
+        撤销选择
+
+
+'''
+一般分成2function：
+1:main  function to call the helper function
+
+2:backtracking function:
+def backtracking(self, n, k, startIndex, path, result):
+
+onthing to note down is the *startIndex*
+
+
+'''
