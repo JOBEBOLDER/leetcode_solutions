@@ -27,6 +27,7 @@ def analyze(start_ts: float, end_ts: float, logs: list[dict]) -> dict:
 
 
 '''
+from collections import List
 
 def analyze(start_ts: float, end_ts: float, logs: list[dict]) -> dict:
     max_temps = {}        # 仅统计“窗口内”的每个传感器最高温度
