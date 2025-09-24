@@ -5,7 +5,7 @@ class Solution:
         这道岛屿题目的解法稍微改改就可以解决力扣第 1020 题「飞地的数量」，这题不让你求封闭岛屿的数量，而是求封闭岛屿的面积总和。
         其实思路都是一样的，先把靠边的陆地淹掉，然后去数剩下的陆地数量就行了，非常简单。不过注意第 1020 题中 1 代表陆地，0 代表海水。
 	•	Time: O(m * n)	•	Each cell (i, j) is visited at most once:
-	•	Space: O(m * n) worst-case recursion stack stack.
+	•	Space: O(m * n) worst-case recursion stack stack..
 '''
         if not grid:
             return 
