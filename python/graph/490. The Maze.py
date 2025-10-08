@@ -1,5 +1,9 @@
 class Solution:
     #time:m*n,Each cell enqueued once, each direction explored efficiently
+    #易错点：开始时候把起点加入visited
+    #while 0 <= nextx < m and 0 <= nexty < n and maze[nextx][nexty] == 0:这个边界条件
+    #出界之后要回来
+    #queue加入的是一个turple（（x,y））
 
     #space:O(m·n)visited + queue
 
