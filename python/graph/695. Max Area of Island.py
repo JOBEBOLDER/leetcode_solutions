@@ -1,31 +1,35 @@
 class Solution:
+    #time:Om*n
+    #space:
+# O(m * n)
+# Worst-case recursion depth (single island)
+
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        #using dfs to traverse
         m = len(grid)
         n = len(grid[0])
-        res = 0
+        area = 0
 
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == 1:
-                    #after dfs assign value to one variable then update the result
-                    cur_area = self.dfs(grid,i,j)
-                    res = max(cur_area,res)
-        return res
+                    cur_area = self.dfs(grid, i, j)
+                    area = max(cur_area,area)
+        return area
+                    
 
 
-        
-    def dfs(self,grid:List[List[int]],i,j):
-            m = len(grid)
-            n = len(grid[0])
+    def dfs(self,grid,i,j):
+        #dfs end condiiton:
+        m = len(grid)
+        n = len(grid[0])
 
-            #boundry check:
-            if i < 0 or  j < 0 or i >= m or j >= n :
-                return 0
+        if i >= m or i < 0 or j >= n or j < 0 or grid[i][j] == 0:
+            return 0
 
-            #细节错了，记得mark是算0，不是#，因为这题算的是面积
-            if grid[i][j] == 0:
-                return 0
+        #dfs 后要mark这个==0
+        grid[i][j] = 0
+        #递归得search 4 directions area 
+        area = 1+ self.dfs(grid, i+1, j)+self.dfs(grid, i-1, j)+self.dfs(grid, i, j+1)+self.dfs(grid, i, j-1)
 
-            grid[i][j] = 0
-            area = 1+ self.dfs(grid,i+1,j)+self.dfs(grid,i - 1,j)+self.dfs(grid,i,j+1)+self.dfs(grid,i,j-1)
-            return area
+        return area
