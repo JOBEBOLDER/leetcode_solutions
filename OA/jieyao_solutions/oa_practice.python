@@ -1,0 +1,67 @@
+'''
+当然可以 ✅
+下面是你上传的 Tamr OA 两道题的英文题干，我帮你整理成完整、标准、可复制的格式（完全还原题目原文结构并略微排版优化，方便复习或在 mock interview 时使用）：
+
+⸻
+
+🧩 Question 1 — Endpoint Node in a Network
+
+Function signature:
+
+def compute(start_node_id: int, from_ids: List[int], to_ids: List[int]) -> int:
+
+
+⸻
+
+Description
+
+Implement the function compute(start_node_id, from_ids, to_ids) which should return the last node id of the network found when starting from the node with id start_node_id and following the links of the network.
+
+The goal of this exercise is to find the endpoint node of a simple network, or find the loop if there is one.
+
+In this simple network, each node is linked to at most one outgoing node in a one-way forward direction.
+
+⸻
+
+Parameters
+	•	start_node_id (int): Id of the starting node.
+	•	from_ids (List[int]): Ids of the linked nodes (link starts).
+	•	to_ids (List[int]): Ids of the linked nodes (link ends).
+
+from_ids and to_ids are two arrays of the same length which describe the one-way links of the network (from_ids[i] is linked to to_ids[i]).
+
+⸻
+
+Return value
+	•	output (int): Endpoint node id, or node id before closing the loop.
+
+In case you run into a loop when traversing the network, the function should return the id of the last node traversed before closing the loop.
+
+⸻
+
+Constraints
+	•	1 < node id < 5000
+	•	The node ids are not necessarily ordered.
+	•	A node will never be directly linked to itself.
+
+⸻
+
+Example
+
+start_node_id = 6
+from_ids = [4, 9, 6, 1]
+to_ids   = [9, 5, 1, 4]
+
+Return value: 5
+
+⸻
+
+Explanation
+
+In this network, starting from node 6, you traverse:
+
+6 → 1 → 4 → 9 → 5
+
+Node 5 has no outgoing edge, so it is the endpoint node.
+
+'''
