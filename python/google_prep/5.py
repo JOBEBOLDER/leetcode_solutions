@@ -32,6 +32,8 @@ and how one shoud approach it!
 从 Bob 的起点 E 开始做一次 BFS：得到 E 到所有点的最短距离 distE[]。
 从目的地 C 开始做一次逆向 BFS（无向图直接搜即可）：得到 C 到所有点的最短距离 distC[]。
 遍历图中所有的城市 $X$：计算 distA[X] + distE[X] + distC[X]，最小值即为答案。
+
+复杂度： $O(V+E)$ 时间，$O(V)$ 空间。
 '''
 from collections import deque
 

@@ -1,7 +1,9 @@
 '''
 Hi folks,
 
-I had a Google onsite interview last week and was asked the following problem. I wanted to discuss if anyone recently got asked this problem and wanted to discuss regarding its follow up
+I had a Google onsite interview last week and was asked the following problem. 
+I wanted to discuss if anyone recently got asked this problem and wanted to discuss 
+regarding its follow up
 
 Problem statement:
 

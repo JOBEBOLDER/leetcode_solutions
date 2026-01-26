@@ -30,16 +30,9 @@ the overall interaction was uncomfortable.
  The tone throughout the conversation felt irritated and dismissive, 
  which made the experience quite difficult despite my maintaining professionalism.
 
-Round 2 (45 minutes — DSA Only)
-This round went significantly better. My interviewer was someone I recognized from Instagram/LinkedIn (a known tech influencer), and the interaction was smooth and positive.
 
-Problem:
-Given a binary tree where each node contains only binary values, count the number of “islands.”
-Follow-up: Count the sizes of each island.
-
-The twist was that the island structure was given as a tree (not a grid). I discussed the approach clearly, covered edge cases, and walked through a dry run. The interviewer seemed genuinely satisfied with the solution and the thought process.
 '''
-
+'''
 import math
 
 def can_reach(routers, start_node, end_node, radius):
@@ -76,3 +69,96 @@ def can_reach(routers, start_node, end_node, radius):
                 visited.add(neighbor)
                 queue.append(neighbor)
     return False
+
+'''
+
+import math
+from collections import defaultdict, deque
+
+def canReach(routers, startpoint, endpoint, radius):
+    # 1) build graph
+    adj = {name: [] for name in routers}
+    names = list(routers.keys())
+
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            u, v = names[i], names[j]
+            x1, y1 = routers[u]
+            x2, y2 = routers[v]
+            if math.hypot(x1 - x2, y1 - y2) <= radius:
+                adj[u].append(v)
+                adj[v].append(u)
+
+    # 2) BFS reachability
+    if startpoint not in adj or endpoint not in adj:
+        return False
+
+    q = deque([startpoint])
+    seen = {startpoint}
+
+    while q:
+        cur = q.popleft()
+        if cur == endpoint:
+            return True
+        for nei in adj[cur]:
+            if nei not in seen:
+                seen.add(nei)
+                q.append(nei)
+    return False
+
+'''
+Round 2 (45 minutes — DSA Only)
+This round went significantly better. My interviewer was someone I recognized from Instagram/LinkedIn (a known tech influencer), and the interaction was smooth and positive.
+
+Problem:
+Given a binary tree where each node contains only binary values, count the number of “islands.”
+Follow-up: Count the sizes of each island.
+
+The twist was that the island structure was given as a tree (not a grid). 
+I discussed the approach clearly, covered edge cases, and walked through a dry run. 
+The interviewer seemed genuinely satisfied with the solution and the thought process.
+
+'''
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def count_tree_islands(root):
+    island_sizes = []
+    
+    # helper 负责遍历并“消灭”整个岛屿，返回岛屿大小
+    def dfs(node):
+        if not node or node.val == 0:
+            return 0
+
+        node.val = 0  # 标记已访问/沉岛
+
+        left_size = dfs(node.left)     # 左子树这部分岛屿的面积
+        right_size = dfs(node.right)   # 右子树这部分岛屿的面积
+
+        size = 1 + left_size + right_size  # 自己(1) + 左 + 右
+        return size
+    
+    # 主函数：寻找每一个岛屿的起点
+    def traverse(node):
+        if not node:
+            return
+        
+        if node.val == 1:
+            # 发现新岛屿，开始 DFS 统计大小
+            island_sizes.append(dfs(node))
+            
+        # 注意：即便当前是 0 或 1，都要继续看子节点
+        # 因为 0 的下面可能还有新的 1（新的岛屿）
+        traverse(node.left)
+        traverse(node.right)
+
+    traverse(root)
+    return len(island_sizes), island_sizes
+
+# 复杂度分析：
+# Time: O(N) 每个节点访问一次
+# Space: O(H) H为树高，递归栈空间
