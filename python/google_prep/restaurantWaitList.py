@@ -1,6 +1,22 @@
+'''
+第二轮: 亚洲女生，很chill，地里有的 餐厅排队。设计一个waitlist的structure，满足三种功能，
+join waitlist, leave waitlist, serve customers with certain size. 
+这题可能每个面试官都会有一些不一样，
+serve customer这个部分我只需要检查有没有party size和table size完全一样的party就行了。
+ join 和 leave可能要考虑一下有没有重复加waitlist或者重复leave的可能  ✅
+
+ 因为它用 list 做底层：
+	•	查找/删除都是 O(n)（需要遍历）
+'''
+
+
+
 class RestaurantWaitlist:
     def __init__(self):
         self.waitlist = []
+        #里面存的是很多个 (party_name, party_size) 的 tuple：
+        #("Smith", 4)
+        #("Johnson", 2)
 
     def join_waitlist(self, party_name, party_size):
         """

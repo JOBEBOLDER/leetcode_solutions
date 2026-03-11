@@ -1,6 +1,8 @@
 '''
-You are given a string containing only parentheses ('(' and ')') and digits (0-9). At the index of a digit, you must delete a number of 
-parentheses to the left of the index equal to the digit's value. Return true if it is possible to balance the parenthesis of the input.
+You are given a string containing only parentheses ('(' and ')') and digits (0-9). At the index of a digit, 
+you must delete a number of 
+parentheses to the left of the index equal to the digit's value. 
+Return true if it is possible to balance the parenthesis of the input.
 
 Example 1 Input: ((2)) Output: False Reason: Only possible string is unbalanced: "))"
 

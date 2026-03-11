@@ -11,6 +11,10 @@ The next value 10 comes in.
 The values in window (i.e. latest `K` values) should be (50, 60, 50, 100, 10)
 The next value 40 comes in. The window is now (60, 50, 100, 10, 40).
 
+同样的data stream，但是要在最新的K个元素中去掉X个最大的元素然后求average。楼主一开始说了个priority queue，
+面试官说不太efficiency，然后思考了一会儿用sortedList，压哨写完   ✅ ‼️
+
+
 '''
 from collections import deque
 from typing import Optional

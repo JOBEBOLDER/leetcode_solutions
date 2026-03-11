@@ -17,60 +17,59 @@ forward it to Router C, but Router D will never receive the message.
 Given a list of routers and their coordinates, determine whether
  a message from Router A can reach Router B.
 
-My interviewer joined around 25 minutes late. Coincidentally, 
-I had another (on-campus) interview that day with only a 20-minute gap between the two, 
-so the delay added a lot of stress.
-
-The problem itself was straightforward, and I was able to solve and code it. However, 
-the overall interaction was uncomfortable.
- While I was coding and explaining my thought process (as generally encouraged), 
- the interviewer abruptly told me to stop speaking and just write the code. 
- After I completed my solution, she spent around 5–7 minutes checking it line-by-line 
- against what seemed like an internal reference solution. 
- The tone throughout the conversation felt irritated and dismissive, 
- which made the experience quite difficult despite my maintaining professionalism.
-
-
+Sample input: [(0,0),(0,8),(0,17),(11,0)], wireless range = 10, source = 0, destination = 3
+the source: routers index in the given list, as well as dest
+Sample output: False
 '''
-'''
-import math
 
-def can_reach(routers, start_node, end_node, radius):
-    # routers: { "A": (0,0), "B": (0,8), ... }
-    
-    # 1. 建图 (Adjacency List)
-    adj = {name: [] for name in routers}
-    names = list(routers.keys())
-    
-    for i in range(len(names)):
-        for j in range(i + 1, len(names)):
-            u, v = names[i], names[j]
-            x1, y1 = routers[u]
-            x2, y2 = routers[v]
-            # 计算欧几里得距离
-            dist = math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
-            if dist <= radius:
-                adj[u].append(v)
-                adj[v].append(u)
-    
-    # 2. BFS 寻找路径
-    if start_node not in adj or end_node not in adj:
-        return False
-        
-    queue = [start_node]
-    visited = {start_node}
-    
-    while queue:
-        curr = queue.pop(0)
-        if curr == end_node:
-            return True
-        for neighbor in adj[curr]:
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append(neighbor)
+from collections import deque
+from typing import List, Tuple
+
+def can_reach(routers: List[Tuple[int,int]], r: float, source: int, dest: int) -> bool:
+    n = len(routers)
+    if source == dest:
+        return True
+
+    r2 = r * r  # 用平方避免开根号
+    q = deque([source])
+    visited = [False] * n
+    visited[source] = True
+
+    while q:
+        u = q.popleft()
+        x1, y1 = routers[u]
+
+        for v in range(n):
+            if not visited[v]:
+                x2, y2 = routers[v]
+                dx, dy = x1 - x2, y1 - y2
+                if dx*dx + dy*dy <= r2:  # 在范围内就能互相转发
+                    if v == dest:
+                        return True
+                    visited[v] = True
+                    q.append(v)
+
     return False
 
 '''
+Time Complexity: O(n²)
+
+原因：
+	•	BFS 最多会把每个路由器出队一次（n 次）。
+	•	每次出队一个 u，你都用 for v in range(n) 扫一遍所有路由器来找“在范围内的邻居”，这是 O(n)。
+	•	所以总计 n * n = O(n²)。
+
+早停（找到 dest 直接 return）只会让平均更快，但 worst-case 仍是 O(n²)。
+
+Space Complexity: O(n)
+	•	visited 是 O(n)
+	•	队列 q 最多 O(n)
+	•	其余常数
+
+'''
+# demo
+print(can_reach([(0,0),(0,8),(0,17),(11,0)], 10, 0, 3))  # False
+
 
 import math
 from collections import defaultdict, deque
@@ -106,12 +105,13 @@ def canReach(routers, startpoint, endpoint, radius):
                 q.append(nei)
     return False
 
+
 '''
 Round 2 (45 minutes — DSA Only)
-This round went significantly better. My interviewer was someone I recognized from Instagram/LinkedIn (a known tech influencer), and the interaction was smooth and positive.
 
 Problem:
-Given a binary tree where each node contains only binary values, count the number of “islands.”
+Given a binary tree where each node contains only binary values, 
+count the number of “islands.”
 Follow-up: Count the sizes of each island.
 
 The twist was that the island structure was given as a tree (not a grid). 
@@ -126,39 +126,83 @@ class TreeNode:
         self.left = left
         self.right = right
 
-def count_tree_islands(root):
-    island_sizes = []
+def count_islands(root):
+    island_count = 0
     
-    # helper 负责遍历并“消灭”整个岛屿，返回岛屿大小
-    def dfs(node):
-        if not node or node.val == 0:
-            return 0
-
-        node.val = 0  # 标记已访问/沉岛
-
-        left_size = dfs(node.left)     # 左子树这部分岛屿的面积
-        right_size = dfs(node.right)   # 右子树这部分岛屿的面积
-
-        size = 1 + left_size + right_size  # 自己(1) + 左 + 右
-        return size
-    
-    # 主函数：寻找每一个岛屿的起点
-    def traverse(node):
+    # helper 判断当前节点是否是一个新岛屿的“入口”
+    def dfs(node, parent_val):
+        nonlocal island_count
         if not node:
             return
         
-        if node.val == 1:
-            # 发现新岛屿，开始 DFS 统计大小
-            island_sizes.append(dfs(node))
+        # 如果当前是 1，且父节点是 0（或不存在），说明发现了一个新岛屿
+        if node.val == 1 and parent_val == 0:
+            island_count += 1
             
-        # 注意：即便当前是 0 或 1，都要继续看子节点
-        # 因为 0 的下面可能还有新的 1（新的岛屿）
-        traverse(node.left)
-        traverse(node.right)
+        # 继续递归，当前的节点 val 将作为下一层的 parent_val
+        dfs(node.left, node.val)
+        dfs(node.right, node.val)
 
-    traverse(root)
-    return len(island_sizes), island_sizes
-
+    # 初始调用，假设 root 的父节点值为 0
+    dfs(root, 0)
+    return island_count
 # 复杂度分析：
 # Time: O(N) 每个节点访问一次
 # Space: O(H) H为树高，递归栈空间
+
+
+
+#followup quesstion:
+class TreeNode:
+    def __init__(self,left=None,right=None,val = 0):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def find_island_on_tree(root:Optional[TreeNode]):
+
+        island_number = 0
+
+        def dfs(node,parent): 
+            nonlocal island_number
+            if not root:
+                return 
+            
+            if node.val == 1 and parent.val == 0:
+                island_number += 1
+
+            dfs(node.left,node.val)
+            dfs(node.right,node.val)
+
+        dfs(root,0)
+        return island_number
+    
+
+    # Follow-up: Count the sizes of each island.
+    def count_island_size(root):
+        size = []
+
+        def traverse(root):
+            if not root:
+                return 
+            if root.val == 1:
+                # 发现岛入口 -> 立刻去吃掉整座岛并数面积，traverse = scan every node, once you see a 1, 
+                # that must be a new island (because we will sink islands), so start a DFS to consume it.
+                size.append(self.dfs(root))
+
+            traverse(root.left)
+            traverse(root.right)
+
+        # dfs 做什么？——“沉岛 + 数面积”
+        def dfs(root):
+            if not root or root.val == 0:
+                return 0
+            
+            root.val = 0
+
+            return 1 + dfs(root.left) + dfs(root.right)
+
+  # #dfs(node) returns the size of the 1-component connected to this node.
+# If node is water (0) or null → size 0.
+# Otherwise count itself (1), mark it visited (set to 0), then add sizes from children.     

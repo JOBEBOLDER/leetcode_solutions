@@ -51,6 +51,8 @@ class ChatAnalyzer:
 
                     user, text = parsed
                     word_counts[user] += len(text.split())
+                    # msg_counts[user] += 1   # ✅ 每条消息 +1
+                    #如果按“信息条数”（每个用户发了多少条合法消息）算，你只需要把累加逻辑从 len(text.split()) 改成 +1 就行：每解析出一条合法记录就给该用户计数一次。
 
         except IOError as e:
             print(f"Error reading file: {e}")
@@ -74,33 +76,27 @@ if __name__ == "__main__":
     # result = analyzer.get_top_talkative_users('chat.txt', 3)
     # print(result)
 
+'''
+设：
+	•	m = 文件行数
+	•	L = 所有行的总字符数（或总文本量）
+	•	U = 不同用户数
+	•	n = 要取的 top n
+
+Time
+	•	逐行解析 + split() 统计词数：整体 O(L)（按总文本量算最准确）
+	•	heapq.nlargest(n, word_counts.items(), ...)：O(U log n)
+
+总时间：O(L + U log n)
+（若 n ≈ U，最坏可写成 O(L + U log U)）
+
+Space
+	•	word_counts 存 U 个用户：O(U)
+	•	nlargest 内部堆大小约为 n：O(n)
+	•	其他常数
+
+总空间：O(U + n)（通常主导是 O(U)）
+
+'''
 
 
-class analyze:
-    def __init__(self):
-        self.pattern.compile()
-
-    def get_most_talkactive_user(self,file_path:str, n:int)->List[Tuple[str,int]]:
-        word_counts:DefaultDict[str,int] = defaultdict(int)
-
-        try:
-            with open(file_path,'r',encoding='utf-8') as file:
-                for line in file:
-                    parsed = self.parsed(line)
-                    if not parsed:
-                        continue
-                    user,text = parsed
-                    word_counts[user] += len(text.split())
-            #word_counts.items() = [("alice", 12), ("bob", 5), ("john", 20)]
-            return heapq.nlargest(n,word_counts.items,key=lambda item:item[1])
-
-
-        except IOError as e:
-            print(f"can not open file due to {e}")
-
-
-    def parsed(self, line:str)->optional[Tuple[str,str]]:
-        match = self.pattern.match(line.strip())
-        if not match:
-            return None
-        return match.group(1),match.group(2)

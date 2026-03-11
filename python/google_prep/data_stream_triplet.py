@@ -44,11 +44,10 @@ class StreamProcessor:
         self.values = []
 
     def check_values(self, new_value, d):
-        # Insert the new value into the sorted list
-        bisect.insort(self.values, new_value)
+        # 1) 插入到有序数组，pos 就是插入位置（解决重复值定位问题）
+        index = bisect.bisect_left(self.values,new_value)
+        self.values.insert(index, new_value)
 
-        # Find the index of the new value
-        index = self.values.index(new_value)
 
         # Use a sliding window to find any clusters
         for i in range(index - 2, index + 1):
@@ -85,22 +84,19 @@ import bisect
 
 class StreamProcessor:
     def __init__(self):
-        self.values= []
+        self.values = []
 
-    def find_triplet(self,new_val:int,dis:int):
+    def find_triplet(self,new_value,d):
+        bisect.insort(self.values,new_value)
 
-        bisect.insort(self.values,new_val)
-        index = self.values.index(new_val)
+        index = self.values.index(self.values)
 
-        for i in range(index - 2,index + 1):
-            if i >= 0 and i + 2 < len(self.values) and self.values[i+2] - self.values[i] <= d:
-                cluster = self.values[i:i+3]
-                for v in cluster:
-                    self.values.remove(v)
-                return cluster
+        for i in range(index-2,index+1):
+            if i+2< len(self.values) and self.values[i+2]-self.values[i] <= d:
+                element = self.values[i:i+3]
+                for e in element:
+                    self.values.remove(e)
+                return element
         return None
-stream_processor = StreamProcessor()
-print(stream_processor.find_triplet())
-
 
         

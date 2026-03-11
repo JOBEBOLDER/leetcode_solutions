@@ -80,3 +80,7 @@ def windowed_average_exclude_k(nums, windowSize, k):
             res.append(avg)
             
     return res
+
+# 3) sl.islice(a, b) 做什么？
+
+# SortedList.islice(a, b) 类似于 sl[a:b]，返回从下标 a 到 b-1 的那些元素（一个可迭代对象）。

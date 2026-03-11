@@ -1,7 +1,4 @@
 '''
-I had previously cleared the screen round of google, so 
-I scheduled all the coding rounds on the same day with 1 hour gap. 
-Here are the different questions that were asked in each of the rounds:
 
 Round 1
 Question: You are given a graph of cities where each vertice denotes a city, 
