@@ -41,7 +41,8 @@ Constraints:
 0 <= k <= candies.length
 
 '''
-    def shareCandies(self, candies: List[int], k: int) -> int:
+from collections import Counter
+def shareCandies(candies: List[int], k: int) -> int:
         #base caseL
         if len(candies) < k or k < 0:
             return 0
@@ -71,3 +72,11 @@ Constraints:
                 res = max(res,unique_keep)
 
         return res
+
+test_candies = [2,2,2,2,3,3]
+test_k = 2
+print(shareCandies(test_candies,test_k))
+test_candies = [1,2,2,3,4,3]
+test_k = 2
+print(shareCandies(test_candies,test_k))
+
