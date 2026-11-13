@@ -27,6 +27,8 @@ Constraints:
 s consists only of lowercase English letters.
 '''
 #so basicly the logic it's the repetition of each character can not more than2
+#time:On
+#space:On(n represent the number of the counter)
 from collections import Counter
 def maximumLengthSubstring(s:string)->int:
     left = 0
